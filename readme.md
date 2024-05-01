@@ -33,6 +33,10 @@ And then run:
 ollama pull llama3
 ```
 
+### LangSmith (Optional)
+
+If you want to use [LangSmith](https://www.langchain.com/langsmith), copy the `.env.example` to `.env` and fill the `LANGSMITH_API_KEY` with your API key.
+
 ## Running the project
 
 Go to `Run and Debug` in VSCode and select `Debug App`.

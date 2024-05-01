@@ -1,5 +1,8 @@
+from dotenv import load_dotenv
 import streamlit as st
 from agent import agent
+
+load_dotenv()
 
 with st.sidebar:
     collection_name = st.text_input("Vector DB collection name", "my-collection")
