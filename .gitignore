@@ -1,0 +1,24 @@
+# Python virtual environment
+.venv/
+
+# Python compiled files
+*.pyc
+__pycache__/
+
+# IDE files
+.idea/
+
+# Logs
+*.log
+
+# Dependency directories
+venv/
+env/
+lib/
+bin/
+
+# Exclude .history directory
+.history/
+data/
+
+.env
