@@ -65,7 +65,8 @@ def get_workflow(
         documents = state["documents"]
 
         # RAG generation
-        generation = rag_chain.invoke({"context": documents, "question": question})
+        mapped_docs = [d.page_content for d in documents]
+        generation = rag_chain.invoke({"context": mapped_docs, "question": question})
         return {"documents": documents, "question": question, "generation": generation}
 
     def grade_documents(state: GraphState):
@@ -206,8 +207,9 @@ def get_workflow(
         documents = state["documents"]
         generation = state["generation"]
 
+        mapped_docs = [d.page_content for d in documents]
         score = hallucination_grader.invoke(
-            {"documents": documents, "generation": generation}
+            {"documents": mapped_docs, "generation": generation}
         )
         grade = score["score"]
 
