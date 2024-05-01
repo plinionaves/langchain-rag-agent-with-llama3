@@ -1,45 +1,40 @@
-from pprint import pprint
-from graph import get_workflow
-from vector_store import build_vector_store
-from generator import get_response_generator
-from graders import get_answer_grader, get_hallucination_grader, get_relevance_grader
-from router import get_question_router
-from tools import get_web_search_tool
+import streamlit as st
+from agent import agent
 
-
-def main():
-    collection_name = "rag-chroma"
-    urls = [
-        "https://lilianweng.github.io/posts/2023-06-23-agent/",
-        "https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/",
-        "https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/",
-    ]
-    retriever = build_vector_store(collection_name, urls).as_retriever()
-    rag_chain = get_response_generator()
-    retrieval_grader = get_relevance_grader()
-    web_search_tool = get_web_search_tool()
-    question_router = get_question_router()
-    hallucination_grader = get_hallucination_grader()
-    answer_grader = get_answer_grader()
-    workflow = get_workflow(
-        retriever=retriever,
-        rag_chain=rag_chain,
-        retrieval_grader=retrieval_grader,
-        web_search_tool=web_search_tool,
-        question_router=question_router,
-        hallucination_grader=hallucination_grader,
-        answer_grader=answer_grader,
+with st.sidebar:
+    collection_name = st.text_input("Vector DB collection name", "my-collection")
+    urls = st.text_area(
+        "URLs to be used as context (separated by new line)",
+        "\n".join(
+            [
+                "https://lilianweng.github.io/posts/2023-06-23-agent/",
+                "https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/",
+                "https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/",
+            ]
+        ),
+        height=248,
     )
 
-    app = workflow.compile()
+st.title("💬 Chatbot")
+st.caption("🚀 A streamlit chatbot powered by LLaMA3 LLM")
+if "messages" not in st.session_state:
+    st.session_state["messages"] = [
+        {"role": "assistant", "content": "How can I help you?"}
+    ]
 
-    inputs = {"question": "What are the types of agent memory?"}
-    inputs_iterator = app.stream(inputs)
-    for output in inputs_iterator:
-        for key, value in output.items():
-            pprint(f"Finished running: {key}:")
-    pprint(value["generation"])
+for msg in st.session_state.messages:
+    st.chat_message(msg["role"]).write(msg["content"])
 
+if prompt := st.chat_input():
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    st.chat_message("user").write(prompt)
 
-if __name__ == "__main__":
-    main()
+    loading_message = {"role": "assistant", "content": "Generating response..."}
+    st.session_state.messages.append(loading_message)
+    st.chat_message("assistant").write(loading_message["content"])
+
+    response = agent.generate_response(prompt, collection_name, urls.split("\n"))
+
+    st.session_state.messages.pop()
+    st.session_state.messages.append({"role": "assistant", "content": response})
+    st.chat_message("assistant").write(response)

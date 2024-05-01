@@ -9,4 +9,5 @@ langchain-nomic==0.0.2
 langchain-text-splitters==0.0.1
 langchainhub==0.1.15
 langgraph==0.0.40
+streamlit==1.33.0
 tiktoken==0.6.0

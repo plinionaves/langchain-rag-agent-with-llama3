@@ -2,7 +2,7 @@ from langgraph.graph import END, StateGraph
 from langchain.schema import Document
 from langchain_core.retrievers import RetrieverLike
 from typing_extensions import TypedDict
-from typing import Dict, List
+from typing import List
 
 
 ### State

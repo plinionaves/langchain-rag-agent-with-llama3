@@ -8,14 +8,6 @@
       "name": "Debug App",
       "type": "debugpy",
       "request": "launch",
-      "program": "${workspaceFolder}/src/app.py",
-      "env": {},
-      "console": "integratedTerminal"
-    },
-    {
-      "name": "Debug Streamlit App",
-      "type": "debugpy",
-      "request": "launch",
       "module": "streamlit",
       "args": ["run", "${workspaceFolder}/src/app.py"],
       "env": {},
