@@ -19,7 +19,7 @@ with st.sidebar:
     )
 
 st.title("💬 Chatbot")
-st.caption("🚀 A streamlit chatbot powered by LLaMA3 LLM")
+st.caption("🚀 A streamlit chatbot powered by LLaMa3 LLM")
 if "messages" not in st.session_state:
     st.session_state["messages"] = [
         {"role": "assistant", "content": "How can I help you?"}

@@ -1,4 +1,4 @@
-<h1 align="center">RAG Agent with LangChain and LLaMA3</h1>
+<h1 align="center">RAG Agent with LangChain and LLaMa3</h1>
 
 <p align="center">
   <img alt="Python" src="https://img.shields.io/badge/Python-3.11-blue">
@@ -8,7 +8,7 @@
   <img alt="UI" src="https://img.shields.io/badge/Streamlit-1.33-red">
 </p>
 
-<p align="center">Fully local RAG agent powered by LLaMA3 and LangChain</p>
+<p align="center">Fully local RAG agent powered by LLaMa3 and LangChain</p>
 
 ![](docs/img/langchain-llama3-rag.png)
 
@@ -45,7 +45,7 @@ Go to `Run and Debug` in VSCode and select `Debug App`.
 
 - [YouTube](https://www.youtube.com/watch?v=-ROS6gfYIts)
 - [Jupyter Notebook](https://github.com/langchain-ai/langgraph/blob/main/examples/rag/langgraph_rag_agent_llama3_local.ipynb)
-- [LLaMA3](https://llama.meta.com/llama3)
+- [LLaMa3](https://llama.meta.com/llama3)
 - [Ollama](https://ollama.com)
 
 ## Troubleshooting
