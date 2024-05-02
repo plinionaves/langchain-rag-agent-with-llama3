@@ -14,18 +14,26 @@ class Agent:
         self.app = None
         self.retriever: RetrieverLike = None
         self.current_collection_name: str = None
+        self.current_collection_scope: str = None
         self.current_urls: List[str] = None
 
-    def generate_response(self, question: str, collection_name: str, urls: List[str]):
+    def generate_response(
+        self,
+        question: str,
+        collection_name: str,
+        collection_scope: str,
+        urls: List[str],
+    ):
         if any(
             [
                 self.app is None,
                 self.current_collection_name != collection_name,
+                self.current_collection_scope != collection_scope,
                 self.current_urls != urls,
                 self.retriever is None,
             ]
         ):
-            self.app = self.get_app(collection_name, urls)
+            self.app = self.get_app(collection_name, collection_scope, urls)
 
         inputs = {"question": question}
         inputs_iterator = self.app.stream(inputs)
@@ -36,15 +44,16 @@ class Agent:
 
         return value["generation"]
 
-    def get_app(self, collection_name: str, urls: List[str]):
+    def get_app(self, collection_name: str, collection_scope: str, urls: List[str]):
         self.retriever = build_vector_store(collection_name, urls).as_retriever()
         self.current_collection_name = collection_name
+        self.current_collection_scope = collection_scope
         self.current_urls = urls
 
         rag_chain = get_response_generator()
         retrieval_grader = get_relevance_grader()
         web_search_tool = get_web_search_tool()
-        question_router = get_question_router()
+        question_router = get_question_router(collection_scope)
         hallucination_grader = get_hallucination_grader()
         answer_grader = get_answer_grader()
         workflow = get_workflow(
@@ -55,6 +64,7 @@ class Agent:
             question_router=question_router,
             hallucination_grader=hallucination_grader,
             answer_grader=answer_grader,
+            collection_scope=collection_scope,
         )
 
         self.app = workflow.compile()

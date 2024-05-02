@@ -6,6 +6,9 @@ load_dotenv()
 
 with st.sidebar:
     collection_name = st.text_input("Vector DB collection name", "my-collection")
+    collection_scope = st.text_input(
+        "Collection scope (e.g. LLMs, agents, Gen AI)", "LLMs, agents, Gen AI"
+    )
     urls = st.text_area(
         "URLs to be used as context (separated by new line)",
         "\n".join(
@@ -36,7 +39,12 @@ if prompt := st.chat_input():
     st.session_state.messages.append(loading_message)
     st.chat_message("assistant").write(loading_message["content"])
 
-    response = agent.generate_response(prompt, collection_name, urls.split("\n"))
+    response = agent.generate_response(
+        question=prompt,
+        collection_name=collection_name,
+        collection_scope=collection_scope,
+        urls=urls.split("\n"),
+    )
 
     st.session_state.messages.pop()
     st.session_state.messages.append({"role": "assistant", "content": response})

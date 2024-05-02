@@ -31,6 +31,7 @@ def get_workflow(
     question_router: RetrieverLike,
     hallucination_grader: RetrieverLike,
     answer_grader: RetrieverLike,
+    collection_scope: str,
 ):
     ### Nodes
     def retrieve(state: GraphState):
@@ -147,6 +148,9 @@ def get_workflow(
         Returns:
             str: Next node to call
         """
+
+        if not collection_scope:
+            return "websearch"
 
         print("---ROUTE QUESTION---")
         question = state["question"]
