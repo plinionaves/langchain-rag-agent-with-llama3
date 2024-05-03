@@ -2,8 +2,8 @@
 
 <p align="center">
   <img alt="Python" src="https://img.shields.io/badge/Python-3.11-blue">
-  <img alt="LLaMa" src="https://img.shields.io/badge/LLaMa-3-blue">
-  <img alt="LangChain" src="https://img.shields.io/badge/LangChain-3.11-blue">
+  <img alt="LLaMa" src="https://img.shields.io/badge/LLaMa-3-dodgerblue">
+  <img alt="LangChain" src="https://img.shields.io/badge/LangChain-0.1-darkgreen">
   <img alt="ChromaDB" src="https://img.shields.io/badge/ChromaDB-0.5-orange">
   <img alt="UI" src="https://img.shields.io/badge/Streamlit-1.33-red">
 </p>

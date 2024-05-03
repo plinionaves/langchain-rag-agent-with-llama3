@@ -7,7 +7,7 @@ load_dotenv()
 with st.sidebar:
     collection_name = st.text_input("Vector DB collection name", "my-collection")
     collection_scope = st.text_input(
-        "Collection scope (e.g. LLMs, agents, Gen AI)", "LLMs, agents, Gen AI"
+        "Collection scope (e.g. LLMs, Agents, Gen AI)", "LLMs, Agents, Gen AI"
     )
     urls = st.text_area(
         "URLs to be used as context (separated by new line)",
